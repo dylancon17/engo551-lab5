@@ -7,20 +7,24 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-function onConnect() {
-
+function onConnect(recon, url) {
+    console.log("Connected! " + recon + " " + url)
 }
 
-function onFailure() {
-
+// If failed, try again
+function onFailure(message) {
+    console.log("Failed! " + message)
+    setTimeout(startconnection, 2000)
 }
 
+// If disconnected, try again
 function onConnectionLost() {
-
+    console.log("Connection Lost!")
+    setTimeout(startconnection, 2000)
 }
 
 function onMessageArrived() {
-    
+
 }
 
 function startconnection(event) {
