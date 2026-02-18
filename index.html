@@ -4,17 +4,37 @@
     <body>
         {% include "navbar.html" %}
         <div class="container info-section">
-        <form onsubmit="startconnection(event)">
-            <input id="host" name="host" type="text" value="test.mosquitto.org">
-            <input id="port" name="port" type="text" value="8080">
-            <button type="submit">Start</button>
-        </form>
+            <div class="row">
+                <div class="col-sm">
+                    <form onsubmit="startconnection(event)">
+                        <input id="host" name="host" type="text" value="test.mosquitto.org">
+                        <input id="port" name="port" type="text" value="8080">
+                        <button type="submit">Start</button>
+                    </form>
+                </div>
+                <div class="col-sm">
+                    <form onsubmit="endConnection(event)">
+                        <button type="submit">End</button>
+                    </form>
+                </div>
+                <div class="col-sm">
+                    <form onsubmit="settopic(event)">
+                        <input id="topic" name="topic" type="text" value="engo551/dylan_conley/my_temperature">
+                        <button type="submit">Set Topic Publishing/Subscription</button>
+                    </form>
+                </div>
+                <div class="col-sm">
+                    <form onsubmit="publishstatus(event)">
+                        <button type="submit">Share My Status</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div id="map"></div>
+                </div>
+            </div>
 
-        <form onsubmit="endConnection(event)">
-            <button type="submit">End</button>
-        </form>
-
-            <div id="map"></div>
         </div>
         {% include "footer.html" %}
 
