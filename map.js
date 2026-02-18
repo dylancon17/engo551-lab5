@@ -8,19 +8,23 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 function onConnect(recon, url) {
-    console.log("Connected! " + recon + " " + url)
+    console.log("Connected! " + recon + " " + url);
+    alert("Connected! " + recon + " " + url);
 }
 
 // If failed, try again
 function onFailure(message) {
-    console.log("Failed! " + message)
-    setTimeout(startconnection, 2000)
+    console.log("Failed! " + message);
+    alert("Failed! " + message);
+
+    setTimeout(startconnection, 2000);
 }
 
 // If disconnected, try again
 function onConnectionLost() {
-    console.log("Connection Lost!")
-    setTimeout(startconnection, 2000)
+    console.log("Connection Lost!");
+    alert("Connection Lost!");
+    setTimeout(startconnection, 2000);
 }
 
 function onMessageArrived() {
@@ -32,7 +36,7 @@ function startconnection(event) {
     var port = document.getElementById("value").value;
     var client = "dylansdevice" + Math.floor(Math.random() * 10000);
 
-    mqqt = new Paho.MQTT.Client(host, port, client);
+    mqtt = new Paho.MQTT.Client(host, port, client);
     var options = {
         timeout: 4000,
         onSuccess: onConnect,
@@ -47,7 +51,9 @@ function startconnection(event) {
 }
 
 function endConnection(event) {
-
+    mqtt.disconnect();
+    console.log("Disconnected!");
+    alert("Disconnected!");
 }
 
 function settopic(event) {
