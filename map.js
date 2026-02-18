@@ -7,18 +7,49 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-function startconnection() {
+function onConnect() {
+
+}
+
+function onFailure() {
+
+}
+
+function onConnectionLost() {
+
+}
+
+function onMessageArrived() {
     
 }
 
-function endConnection() {
+function startconnection(event) {
+    var host = document.getElementById("host").value;
+    var port = document.getElementById("value").value;
+    var client = "dylansdevice" + Math.floor(Math.random() * 10000);
+
+    mqqt = new Paho.MQTT.Client(host, port, client);
+    var options = {
+        timeout: 4000,
+        onSuccess: onConnect,
+        onFailure: onFailure,
+    };
+
+    mqtt.onConnectionLost = onConnectionLost;
+    mqtt.onMessageArrived = onMessageArrived;
+
+    mqtt.connect(options)
 
 }
 
-function settopic() {
+function endConnection(event) {
 
 }
 
-function publishstatus() {
-    
+function settopic(event) {
+
+}
+
+function publishstatus(event) {
+
 }
