@@ -32,32 +32,36 @@
         
         <div class="container info-section">
             <div class="row">
-                <div class="col-sm">
+                <div class="col text-center">
+                        <input id="host" name="host" type="text" value="test.mosquitto.org" title="Host">
+                        <input id="port" name="port" type="text" value="8080" title="Port">
+                        <input id="topic" name="topic" type="text" value="engo551/dylan_conley/my_temperature" size="40" title="Topic">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
                     <form onsubmit="startconnection(event)">
-                        <input id="host" name="host" type="text" value="test.mosquitto.org">
-                        <input id="port" name="port" type="text" value="8080">
                         <button type="submit">Start</button>
                     </form>
                 </div>
-                <div class="col-sm">
+                <div class="col text-center">
                     <form onsubmit="endConnection(event)">
                         <button type="submit">End</button>
                     </form>
                 </div>
-                <div class="col-sm">
+                <div class="col text-center">
                     <form onsubmit="settopic(event)">
-                        <input id="topic" name="topic" type="text" value="engo551/dylan_conley/my_temperature">
                         <button type="submit">Set Topic Publishing/Subscription</button>
                     </form>
                 </div>
-                <div class="col-sm">
+                <div class="col text-center">
                     <form onsubmit="publishstatus(event)">
                         <button type="submit">Share My Status</button>
                     </form>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <div id="map"></div>
                 </div>
             </div>
