@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    {% include "header.html" %}
+    <body>
+        {% include "navbar.html" %}
+        <div class="container info-section">
+        <form onsubmit="startconnection(event)">
+            <input id="host" name="host" type="text" value="test.mosquitto.org">
+            <input id="port" name="port" type="text" value="8080">
+            <button type="submit">Start</button>
+        </form>
+
+        <form onsubmit="endConnection(event)">
+            <button type="submit">End</button>
+        </form>
+
+            <div id="map"></div>
+        </div>
+        {% include "footer.html" %}
+
+
+
