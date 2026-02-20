@@ -8,32 +8,41 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 function onConnect(recon, url) {
-    console.log("Connected! " + recon + " " + url);
-    alert("Connected! " + recon + " " + url);
+    console.log("Connected!");
+    alert("Connected!");
 }
+
+var should_be_open = false;
+var publishing_topic = "";
 
 // If failed, try again
 function onFailure(message) {
-    console.log("Failed! " + message);
-    alert("Failed! " + message);
+    if (should_be_open) {
+        console.log("Failed! " + message);
+        alert("Failed! " + message);
 
-    setTimeout(startconnection, 2000);
+        setTimeout(startconnection, 2000);
+    }
 }
 
 // If disconnected, try again
 function onConnectionLost() {
-    console.log("Connection Lost!");
-    alert("Connection Lost!");
-    setTimeout(startconnection, 2000);
+    if (should_be_open) {
+        console.log("Connection Lost!");
+        alert("Connection Lost! Reconnecting");
+        setTimeout(startconnection, 2000);
+    }
 }
 
-function onMessageArrived() {
-
+function onMessageArrived(rx) {
+    console.log("Received!")
+    console.log(rx.payloadString)
 }
 
 function startconnection(event) {
+    console.log("Starting a connection")
     var host = document.getElementById("host").value;
-    var port = document.getElementById("value").value;
+    var port = Number(document.getElementById("port").value);
     var client = "dylansdevice" + Math.floor(Math.random() * 10000);
 
     mqtt = new Paho.MQTT.Client(host, port, client);
@@ -46,17 +55,28 @@ function startconnection(event) {
     mqtt.onConnectionLost = onConnectionLost;
     mqtt.onMessageArrived = onMessageArrived;
 
+    should_be_open = true;
     mqtt.connect(options)
-
 }
 
 function endConnection(event) {
+    should_be_open = false;
     mqtt.disconnect();
     console.log("Disconnected!");
     alert("Disconnected!");
 }
 
 function settopic(event) {
+    if (!should_be_open) {
+        console.log("Must Connect First!");
+        alert("Must Connect First!");
+        return
+    }
+    publishing_topic = document.getElementById("topic").value;
+    mqtt.subscribe(publishing_topic)
+
+    console.log("Topic Set");
+    alert("Topic Set");
 
 }
 

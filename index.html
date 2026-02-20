@@ -39,30 +39,22 @@
             <div class="row">
                 <div class="col text-center">
                         <input id="host" name="host" type="text" value="test.mosquitto.org" title="Host">
-                        <input id="port" name="port" type="text" value="8080" title="Port">
+                        <input id="port" name="port" type="number" value="8080" title="Port">
                         <input id="topic" name="topic" type="text" value="engo551/dylan_conley/my_temperature" size="40" title="Topic">
                 </div>
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <form onsubmit="startconnection(event)">
-                        <button type="submit">Start</button>
-                    </form>
+                    <button onclick="startconnection(event)">Start</button>
                 </div>
                 <div class="col text-center">
-                    <form onsubmit="endConnection(event)">
-                        <button type="submit">End</button>
-                    </form>
+                    <button onclick="endConnection(event)">End</button>
                 </div>
                 <div class="col text-center">
-                    <form onsubmit="settopic(event)">
-                        <button type="submit">Set Topic Publishing/Subscription</button>
-                    </form>
+                    <button onclick="settopic(event)">Set Topic</button>
                 </div>
                 <div class="col text-center">
-                    <form onsubmit="publishstatus(event)">
-                        <button type="submit">Share My Status</button>
-                    </form>
+                    <button onclick="publishstatus(event)">Share My Status</button>
                 </div>
             </div>
             <div class="row">
