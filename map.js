@@ -13,7 +13,7 @@ function onConnect(recon, url) {
 }
 
 var should_be_open = false;
-var publishing_topic = "";
+var publishing_topic = false;
 
 // If failed, try again
 function onFailure(message) {
@@ -81,5 +81,18 @@ function settopic(event) {
 }
 
 function publishstatus(event) {
-
+    if (!should_be_open) {
+        console.log("Must Connect First!");
+        alert("Must Connect First!");
+        return
+    }
+    if (!publishing_topic) {
+        console.log("Must Set a Topic First!");
+        alert("Must Set a Topic First!");
+        return
+    }
+    var msg = "Testing"
+    message = new Paho.MQTT.Message(msg);
+    message.destinationName = publishing_topic
+    mqtt.send(message)
 }
