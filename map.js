@@ -37,8 +37,8 @@ function onConnectionLost() {
 function onMessageArrived(rx) {
     console.log("Received!")
     console.log(rx.payloadString)
-    payload = rx.payloadString
     
+    var geojsonFeature = JSON.parse(rx.payloadString);    
     // From https://leafletjs.com/examples/geojson/
     L.geoJSON(geojsonFeature, {
     onEachFeature: onEachFeature,
@@ -161,6 +161,8 @@ function publishstatus(event) {
             
             console.log("Sent Message");
             alert("Sent Message");
-        }
+        },
+        null,
+        options
     )
 }
