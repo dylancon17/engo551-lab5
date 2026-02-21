@@ -21,7 +21,7 @@ function onFailure(message) {
         console.log("Failed! " + message);
         alert("Failed! " + message);
 
-        setTimeout(startconnection, 2000);
+        setTimeout(connect, 2000);
     }
 }
 
@@ -30,44 +30,18 @@ function onConnectionLost() {
     if (should_be_open) {
         console.log("Connection Lost!");
         alert("Connection Lost! Reconnecting");
-        setTimeout(startconnection, 2000);
+        setTimeout(connect, 2000);
     }
 }
-
-function onMessageArrived(rx) {
-    console.log("Received!")
-    console.log(rx.payloadString)
-    
-    var geojsonFeature = JSON.parse(rx.payloadString);    
-    // From https://leafletjs.com/examples/geojson/
-    L.geoJSON(geojsonFeature, {
-    onEachFeature: onEachFeature,
-    pointToLayer: pointToLayer
-    }).addTo(map)
-
-}
-
-function pointToLayer(feature, latlng) {
-    return L.circleMarker(latlng, {
-        color: getTempColor(feature.properties.temperature)
-    })
-}
-
-function onEachFeature(feature, layer) {
-    layer.bindPopup("Temperature: " + String(feature.properties.temperature));
-}
-
-function getTempColor(temp){
-    if (temp < 10) {
-        return "blue"
-    }
-    if (temp >= 30) {
-        return "red"
-    }
-    return "green"
-}
-
 function startconnection(event) {
+    if (should_be_open) {
+        console.log("Can Not Set Host and Port until Ending")
+        return
+    }
+    connect()
+}
+
+function connect() {
     console.log("Starting a secure connection")
     var host = document.getElementById("host").value;
     var port = Number(document.getElementById("port").value);
@@ -170,4 +144,38 @@ function publishstatus(event) {
         null,
         options
     )
+}
+
+
+function onMessageArrived(rx) {
+    console.log("Received!")
+    console.log(rx.payloadString)
+    
+    var geojsonFeature = JSON.parse(rx.payloadString);    
+    // From https://leafletjs.com/examples/geojson/
+    L.geoJSON(geojsonFeature, {
+    onEachFeature: onEachFeature,
+    pointToLayer: pointToLayer
+    }).addTo(map)
+
+}
+
+function pointToLayer(feature, latlng) {
+    return L.circleMarker(latlng, {
+        color: getTempColor(feature.properties.temperature)
+    })
+}
+
+function onEachFeature(feature, layer) {
+    layer.bindPopup("Temperature: " + String(feature.properties.temperature));
+}
+
+function getTempColor(temp){
+    if (temp < 10) {
+        return "blue"
+    }
+    if (temp >= 30) {
+        return "red"
+    }
+    return "green"
 }
