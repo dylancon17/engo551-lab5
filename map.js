@@ -75,7 +75,7 @@ function settopic(event) {
     publishing_topic = document.getElementById("topic").value;
     mqtt.subscribe(publishing_topic)
 
-    console.log("Topic Set");
+    console.log("Topic Set as " + publishing_topic);
     alert("Topic Set");
 
 }
@@ -95,4 +95,8 @@ function publishstatus(event) {
     message = new Paho.MQTT.Message(msg);
     message.destinationName = publishing_topic
     mqtt.send(message)
+
+    
+    console.log("Sent Message");
+    alert("Sent Message");
 }
