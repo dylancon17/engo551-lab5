@@ -114,6 +114,9 @@ function publishstatus(event) {
             console.log(position.coords.latitude)
             console.log(position.coords.longitude)
             console.log(temperature)
+            alert(position.coords.latitude)
+            alert(position.coords.longitude)
+            alert(temperature)
         }
     )
 
