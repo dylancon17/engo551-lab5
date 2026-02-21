@@ -37,6 +37,34 @@ function onConnectionLost() {
 function onMessageArrived(rx) {
     console.log("Received!")
     console.log(rx.payloadString)
+    payload = rx.payloadString
+    
+    // From https://leafletjs.com/examples/geojson/
+    L.geoJSON(geojsonFeature, {
+    onEachFeature: onEachFeature,
+    pointToLayer: pointToLayer
+    }).addTo(map)
+
+}
+
+function pointToLayer(feature, latlng) {
+    return L.circleMarker(latlng, {
+        color: getTempColor(feature.properties.temperature)
+    })
+}
+
+function onEachFeature(feature, layer) {
+    layer.bindPopup(feature.properties.temperature);
+}
+
+function getTempColor(temp){
+    if (temp < 10) {
+        return "blue"
+    }
+    if (temp >= 30) {
+        return "red"
+    }
+    return "green"
 }
 
 function startconnection(event) {
@@ -111,21 +139,28 @@ function publishstatus(event) {
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API
     navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position.coords.latitude)
-            console.log(position.coords.longitude)
-            console.log(temperature)
-            alert(position.coords.latitude)
-            alert(position.coords.longitude)
-            alert(temperature)
+            
+            //From https://geojson.org/
+            var payload = {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [position.coords.longitude, position.coords.latitude]
+                },
+                "properties": {
+                    "temperature": temperature
+                }
+            }
+
+            var json = JSON.stringify(payload)
+
+            message = new Paho.MQTT.Message(json);
+            message.destinationName = publishing_topic
+            mqtt.send(message)
+
+            
+            console.log("Sent Message");
+            alert("Sent Message");
         }
     )
-
-    var msg = "Testing"
-    message = new Paho.MQTT.Message(msg);
-    message.destinationName = publishing_topic
-    mqtt.send(message)
-
-    
-    console.log("Sent Message");
-    alert("Sent Message");
 }
