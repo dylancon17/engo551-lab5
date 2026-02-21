@@ -49,12 +49,12 @@ function onMessageArrived(rx) {
 
 function pointToLayer(feature, latlng) {
     return L.circleMarker(latlng, {
-        color: getTempColor("Temperature: " + String(feature.properties.temperature))
+        color: getTempColor(feature.properties.temperature)
     })
 }
 
 function onEachFeature(feature, layer) {
-    layer.bindPopup(feature.properties.temperature);
+    layer.bindPopup("Temperature: " + String(feature.properties.temperature));
 }
 
 function getTempColor(temp){
