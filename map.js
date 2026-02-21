@@ -40,7 +40,7 @@ function onMessageArrived(rx) {
 }
 
 function startconnection(event) {
-    console.log("Starting a connection")
+    console.log("Starting a secure connection")
     var host = document.getElementById("host").value;
     var port = Number(document.getElementById("port").value);
     var client = "dylansdevice" + Math.floor(Math.random() * 10000);
@@ -50,6 +50,7 @@ function startconnection(event) {
         timeout: 4000,
         onSuccess: onConnect,
         onFailure: onFailure,
+        useSSL:true
     };
 
     mqtt.onConnectionLost = onConnectionLost;
