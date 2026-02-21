@@ -49,7 +49,7 @@ function onMessageArrived(rx) {
 
 function pointToLayer(feature, latlng) {
     return L.circleMarker(latlng, {
-        color: getTempColor(feature.properties.temperature)
+        color: getTempColor("Temperature: " + String(feature.properties.temperature));
     })
 }
 
