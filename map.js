@@ -36,6 +36,7 @@ function onConnectionLost() {
 function startconnection(event) {
     if (should_be_open) {
         console.log("Can Not Set Host and Port until Ending")
+        alert("Can Not Set Host and Port until Ending")
         return
     }
     connect()
