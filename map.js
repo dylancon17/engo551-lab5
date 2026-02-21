@@ -92,6 +92,31 @@ function publishstatus(event) {
         alert("Must Set a Topic First!");
         return
     }
+    if (!navigator.geolocation) {
+        console.log("Must be position enabled!");
+        alert("Must be position enabled!");
+        return
+    }
+
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    }
+
+    var temperature = Math.random() // [0-1)
+    temperature = temperature * 100 // [0-101)
+    temperature = temperature - 40 // - [-40-61)
+    temperature = Math.floor(temperature) // [-40-60]
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API
+    navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position.coords.latitude)
+            console.log(position.coords.longitude)
+            console.log(temperature)
+        }
+    )
+
     var msg = "Testing"
     message = new Paho.MQTT.Message(msg);
     message.destinationName = publishing_topic
