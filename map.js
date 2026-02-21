@@ -84,8 +84,13 @@ function startconnection(event) {
     mqtt.onConnectionLost = onConnectionLost;
     mqtt.onMessageArrived = onMessageArrived;
 
+    if (publishing_topic && should_be_open) {
+        mqtt.subscribe(publishing_topic)
+    }
+
     should_be_open = true;
     mqtt.connect(options)
+
 }
 
 function endConnection(event) {
